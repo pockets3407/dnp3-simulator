@@ -62,9 +62,9 @@ namespace Automatak.Simulator.DNP3.Components
                 ret.maxControlsPerRequest = Decimal.ToByte(this.numericUpDownMaxControls.Value);
                 ret.maxTxFragSize = Decimal.ToUInt16(this.numericUpDownMaxTxFrag.Value);
                 ret.selectTimeout = TimeSpan.FromMilliseconds(Decimal.ToDouble(this.numericUpDownSelectTimeout.Value));
-                ret.unsolicitedConfirmTimeout = TimeSpan.FromMilliseconds(Decimal.ToDouble(this.numericUpDownUnsolConfirmTimeout.Value));
                 ret.solicitedConfirmTimeout = TimeSpan.FromMilliseconds(Decimal.ToDouble(this.numericUpDownSolConfirmTimeout.Value));
-                ret.unsolicitedRetryPeriod = TimeSpan.FromMilliseconds(Decimal.ToDouble(this.numericUpDownUnsolicitedRetry.Value));
+                //ret.unsolicitedConfirmTimeout = TimeSpan.FromMilliseconds(Decimal.ToDouble(this.numericUpDownUnsolConfirmTimeout.Value));
+                //ret.unsolicitedRetryPeriod = TimeSpan.FromMilliseconds(Decimal.ToDouble(this.numericUpDownUnsolicitedRetry.Value));
                 return ret;
             }
         }

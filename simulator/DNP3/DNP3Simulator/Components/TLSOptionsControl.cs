@@ -28,7 +28,7 @@ namespace Automatak.Simulator.DNP3
                     this.trustedCertTextBox.Text,
                     this.localCertificateTextBox.Text,
                     this.privateKeyTextBox.Text,
-                    Convert.ToInt32(this.maxDepthNumericUpDown.Value),
+                    Convert.ToBoolean(this.maxDepthNumericUpDown.Value),
                     this.checkBoxV1_0.Checked,
                     this.checkBoxV1_1.Checked,
                     this.checkBoxV1_2.Checked,

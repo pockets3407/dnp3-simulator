@@ -63,13 +63,13 @@ namespace Automatak.Simulator.DNP3.RelayOutstationPlugin
             var changes = new ChangeSet();
             var now = DateTime.Now;
 
-            changes.Update(new Binary(closed, 1, now), 0);
+            changes.Update(new Binary(closed, new Flags(1), new DNPTime(now)), 0);
 
             if (closed)
             {                
-                changes.Update(new Analog(currentA.Current, 1, now), 0);
-                changes.Update(new Analog(currentB.Current, 1, now), 1);
-                changes.Update(new Analog(currentC.Current, 1, now), 2);
+                changes.Update(new Analog(currentA.Current, new Flags(1), new DNPTime(now)), 0);
+                changes.Update(new Analog(currentB.Current, new Flags(1), new DNPTime(now)), 1);
+                changes.Update(new Analog(currentC.Current, new Flags(1), new DNPTime(now)), 2);
 
                 this.labelValueIA.Text = String.Format("IA: {0}", currentA.Current);
                 this.labelValueIB.Text = String.Format("IB: {0}", currentB.Current);
@@ -81,18 +81,18 @@ namespace Automatak.Simulator.DNP3.RelayOutstationPlugin
             }
             else
             {
-                changes.Update(new Analog(0, 1, now), 0);
-                changes.Update(new Analog(0, 1, now), 1);
-                changes.Update(new Analog(0, 1, now), 2);
+                changes.Update(new Analog(0, new Flags(1), new DNPTime(now)), 0);
+                changes.Update(new Analog(0, new Flags(1), new DNPTime(now)), 1);
+                changes.Update(new Analog(0, new Flags(1), new DNPTime(now)), 2);
 
                 this.labelValueIA.Text = String.Format("IA: {0}", 0);
                 this.labelValueIB.Text = String.Format("IB: {0}", 0);
                 this.labelValueIC.Text = String.Format("IC: {0}", 0);
             }
 
-            changes.Update(new Analog(voltageA.Current, 1, now), 3);
-            changes.Update(new Analog(voltageB.Current, 1, now), 4);
-            changes.Update(new Analog(voltageC.Current, 1, now), 5);
+            changes.Update(new Analog(voltageA.Current, new Flags(1), new DNPTime(now)), 3);
+            changes.Update(new Analog(voltageB.Current, new Flags(1), new DNPTime(now)), 4);
+            changes.Update(new Analog(voltageC.Current, new Flags(1), new DNPTime(now)), 5);
 
             this.labelValueVA.Text = String.Format("VA: {0}", voltageA.Current);
             this.labelValueVB.Text = String.Format("VB: {0}", voltageB.Current);
@@ -126,13 +126,13 @@ namespace Automatak.Simulator.DNP3.RelayOutstationPlugin
         {
             if (index == 0)
             {
-                switch (command.code)
+                switch (command.opType)
                 {
-                    case (ControlCode.LATCH_ON):
+                    case (OperationType.LATCH_ON):
                         if(execute) this.QueueOperation(true);
                         return CommandStatus.SUCCESS;
 
-                    case (ControlCode.LATCH_OFF):
+                    case (OperationType.LATCH_OFF):
                         if (execute) this.QueueOperation(false);
                         return CommandStatus.SUCCESS;
 
@@ -171,27 +171,27 @@ namespace Automatak.Simulator.DNP3.RelayOutstationPlugin
             return CommandStatus.NOT_SUPPORTED;
         }
 
-        CommandStatus ICommandHandler.Operate(ControlRelayOutputBlock command, ushort index, OperateType opType)
+        CommandStatus ICommandHandler.Operate(ControlRelayOutputBlock command, ushort index, IDatabase database, OperateType opType)
         {
             return OnControl(command, index, true);
         }
 
-        CommandStatus ICommandHandler.Operate(AnalogOutputInt32 command, ushort index, OperateType opType)
+        CommandStatus ICommandHandler.Operate(AnalogOutputInt32 command, ushort index, IDatabase database, OperateType opType)
         {
             return CommandStatus.NOT_SUPPORTED;
         }
 
-        CommandStatus ICommandHandler.Operate(AnalogOutputInt16 command, ushort index, OperateType opType)
+        CommandStatus ICommandHandler.Operate(AnalogOutputInt16 command, ushort index, IDatabase database, OperateType opType)
         {
             return CommandStatus.NOT_SUPPORTED;
         }
 
-        CommandStatus ICommandHandler.Operate(AnalogOutputFloat32 command, ushort index, OperateType opType)
+        CommandStatus ICommandHandler.Operate(AnalogOutputFloat32 command, ushort index, IDatabase database, OperateType opType)
         {
             return CommandStatus.NOT_SUPPORTED;
         }
 
-        CommandStatus ICommandHandler.Operate(AnalogOutputDouble64 command, ushort index, OperateType opType)
+        CommandStatus ICommandHandler.Operate(AnalogOutputDouble64 command, ushort index, IDatabase database, OperateType opType)
         {
             return CommandStatus.NOT_SUPPORTED;
         }
@@ -237,7 +237,7 @@ namespace Automatak.Simulator.DNP3.RelayOutstationPlugin
         }
 
 
-        void ICommandHandler.Start()
+        void ICommandHandler.Begin()
         {
             
         }

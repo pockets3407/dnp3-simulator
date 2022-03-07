@@ -30,13 +30,13 @@ namespace Automatak.Simulator.DNP3.Components
         // TODO remove this
         public void Configure(DatabaseTemplate template)
         {
-            foreach (var record in template.binaries) record.staticVariation = (StaticBinaryVariation)this.ComboBoxBinary.SelectedItem;
-            foreach (var record in template.binaryOutputStatii) record.staticVariation = (StaticBinaryOutputStatusVariation)this.ComboBoxBinaryOutputStatus.SelectedItem;
-            foreach (var record in template.doubleBinaries) record.staticVariation = (StaticDoubleBinaryVariation)this.ComboBoxDoubleBinary.SelectedItem;
-            foreach (var record in template.counters) record.staticVariation = (StaticCounterVariation)ComboBoxCounter.SelectedItem;
-            foreach (var record in template.frozenCounters) record.staticVariation = (StaticFrozenCounterVariation)ComboBoxCounter.SelectedItem;
-            foreach (var record in template.analogs) record.staticVariation = (StaticAnalogVariation)ComboBoxAnalog.SelectedItem;
-            foreach (var record in template.analogOutputStatii) record.staticVariation = (StaticAnalogOutputStatusVariation)ComboBoxAnalogOutputStatus.SelectedItem;            
+            foreach (var record in template.binary) record.Value.staticVariation = (StaticBinaryVariation)this.ComboBoxBinary.SelectedItem;
+            foreach (var record in template.binaryOutputStatus) record.Value.staticVariation = (StaticBinaryOutputStatusVariation)this.ComboBoxBinaryOutputStatus.SelectedItem;
+            foreach (var record in template.doubleBinary) record.Value.staticVariation = (StaticDoubleBinaryVariation)this.ComboBoxDoubleBinary.SelectedItem;
+            foreach (var record in template.counter) record.Value.staticVariation = (StaticCounterVariation)ComboBoxCounter.SelectedItem;
+            foreach (var record in template.frozenCounter) record.Value.staticVariation = (StaticFrozenCounterVariation)ComboBoxCounter.SelectedItem;
+            foreach (var record in template.analog) record.Value.staticVariation = (StaticAnalogVariation)ComboBoxAnalog.SelectedItem;
+            foreach (var record in template.analogOutputStatus) record.Value.staticVariation = (StaticAnalogOutputStatusVariation)ComboBoxAnalogOutputStatus.SelectedItem;            
         }
     }
 }

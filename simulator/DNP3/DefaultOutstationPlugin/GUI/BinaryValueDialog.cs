@@ -41,11 +41,11 @@ namespace Automatak.Simulator.DNP3.DefaultOutstationPlugin
 
                 if (isBinary)
                 {
-                    indices.Each(i => changes.Update(new Binary(checkBoxValue.Checked, qualitySelector.Quality, timestamp), i));                    
+                    indices.Each(i => changes.Update(new Binary(checkBoxValue.Checked, new Flags(qualitySelector.Quality), new DNPTime(timestamp)), i));                    
                 }
                 else
                 {
-                    indices.Each(i => changes.Update(new BinaryOutputStatus(checkBoxValue.Checked, qualitySelector.Quality, timestamp), i));
+                    indices.Each(i => changes.Update(new BinaryOutputStatus(checkBoxValue.Checked, new Flags(qualitySelector.Quality), new DNPTime(timestamp)), i));
                 }
 
                 return changes;

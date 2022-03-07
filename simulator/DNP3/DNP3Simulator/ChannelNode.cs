@@ -43,7 +43,7 @@ namespace Automatak.Simulator.DNP3
             this.outstationFactory = new ActionNodeFactory("Add Outstation", cb => CreateOutstation(cb));
 
 
-            this.channel.AddStateListener(state => callbacks.ChangeState(GetNodeState(state)));
+            // this.channel.AddStateListener(state => callbacks.ChangeState(GetNodeState(state)));
         }
 
         
@@ -53,7 +53,7 @@ namespace Automatak.Simulator.DNP3
             { 
                 case(ChannelState.OPENING):
                     return NodeState.Inactive;
-                case (ChannelState.WAITING):
+                case (ChannelState.SHUTDOWN):
                     return NodeState.Failed;
                 case (ChannelState.OPEN):
                     return NodeState.Active;                

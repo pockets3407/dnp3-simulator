@@ -185,5 +185,22 @@ namespace Automatak.Simulator.DNP3.Commons
 
             return warmRestartTime; 
         }
+
+        public void OnConfirmProcessed(bool is_unsolicited, uint num_class1, uint num_class2, uint num_class3)
+        {
+        }
+
+        public void OnUnknownDestinationAddress(ushort destination)
+        {
+        }
+
+        public void OnUnknownSourceAddress(ushort source)
+        {
+        }
+
+        public DNPTime Now()
+        {
+            return new DNPTime(DateTime.Now);
+        }
     }
 }

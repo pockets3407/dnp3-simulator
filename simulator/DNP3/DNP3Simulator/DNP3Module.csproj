@@ -68,17 +68,6 @@
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DNP3CLRAdapter, Version=1.0.6005.33625, Culture=neutral, processorArchitecture=x86">
-      <HintPath>..\..\..\packages\opendnp3.2.2.0-M1\lib\net45\DNP3CLRAdapter.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="DNP3CLRInterface, Version=2.0.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\opendnp3.2.2.0-M1\lib\net45\DNP3CLRInterface.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SimulatorUI">
-      <HintPath>..\..\SimulatorUI\obj\Release\SimulatorUI.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -309,6 +298,10 @@
       <Project>{6a19318b-8cc5-4bc8-8e80-412180c420a5}</Project>
       <Name>ModuleAPI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SimulatorUI\SimulatorUI.csproj">
+      <Project>{428ddb1f-13f8-401c-aa0e-f0b80af1fc00}</Project>
+      <Name>SimulatorUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DefaultOutstationPlugin\DefaultOutstationPlugin.csproj">
       <Project>{1abc9a1a-6026-4803-bab4-c1190375a531}</Project>
       <Name>DefaultOutstationPlugin</Name>
@@ -327,7 +320,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="Resources\add.png" />
   </ItemGroup>
   <ItemGroup>
@@ -341,6 +333,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\send_container.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="opendnp3">
+      <Version>3.1.1</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

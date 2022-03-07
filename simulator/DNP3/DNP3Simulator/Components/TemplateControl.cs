@@ -21,7 +21,7 @@ namespace Automatak.Simulator.DNP3.Components
             this.CheckState();
         }
         
-        public void SetRecords(IEnumerable<EventRecord> records)
+        public void SetRecords(IEnumerable<EventConfig> records)
         {
             
                 this.SuspendLayout();                
@@ -36,14 +36,14 @@ namespace Automatak.Simulator.DNP3.Components
                 this.ResumeLayout();
         }
 
-        public IEnumerable<EventRecord> GetRecords()
+        public IEnumerable<EventConfig> GetRecords()
         {
-            var list = new List<EventRecord>();
+            var list = new List<EventConfig>();
             ushort index = 0;
             foreach (ListViewItem item in listViewMeas.Items)
             {
                 var pc = (PointClass) Enum.Parse(typeof(PointClass), item.SubItems[1].Text);
-                list.Add(new EventRecord(index, pc));
+                list.Add(new EventConfig() { clazz = pc});
                 ++index;
             }
             return list;            

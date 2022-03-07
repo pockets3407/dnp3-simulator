@@ -30,13 +30,13 @@ namespace Automatak.Simulator.DNP3.Components
         // TODO remove this
         public void Configure(DatabaseTemplate template)
         {
-            foreach (var record in template.binaries) record.eventVariation = (EventBinaryVariation)this.ComboBoxBinary.SelectedItem;
-            foreach (var record in template.binaryOutputStatii) record.eventVariation = (EventBinaryOutputStatusVariation)this.ComboBoxBinaryOutputStatus.SelectedItem;
-            foreach (var record in template.doubleBinaries) record.eventVariation = (EventDoubleBinaryVariation)this.ComboBoxDoubleBinary.SelectedItem;
-            foreach (var record in template.counters) record.eventVariation = (EventCounterVariation)ComboBoxCounter.SelectedItem;
-            foreach (var record in template.frozenCounters) record.eventVariation = (EventFrozenCounterVariation)ComboBoxCounter.SelectedItem;
-            foreach (var record in template.analogs) record.eventVariation = (EventAnalogVariation)ComboBoxAnalog.SelectedItem;
-            foreach (var record in template.analogOutputStatii) record.eventVariation = (EventAnalogOutputStatusVariation)ComboBoxAnalogOutputStatus.SelectedItem;
+            foreach (var record in template.binary) record.Value.eventVariation = (EventBinaryVariation)this.ComboBoxBinary.SelectedItem;
+            foreach (var record in template.binaryOutputStatus) record.Value.eventVariation = (EventBinaryOutputStatusVariation)this.ComboBoxBinaryOutputStatus.SelectedItem;
+            foreach (var record in template.doubleBinary) record.Value.eventVariation = (EventDoubleBinaryVariation)this.ComboBoxDoubleBinary.SelectedItem;
+            foreach (var record in template.counter) record.Value.eventVariation = (EventCounterVariation)ComboBoxCounter.SelectedItem;
+            foreach (var record in template.frozenCounter) record.Value.eventVariation = (EventFrozenCounterVariation)ComboBoxCounter.SelectedItem;
+            foreach (var record in template.analog) record.Value.eventVariation = (EventAnalogVariation)ComboBoxAnalog.SelectedItem;
+            foreach (var record in template.analogOutputStatus) record.Value.eventVariation = (EventAnalogOutputStatusVariation)ComboBoxAnalogOutputStatus.SelectedItem;
         }
     }
 }

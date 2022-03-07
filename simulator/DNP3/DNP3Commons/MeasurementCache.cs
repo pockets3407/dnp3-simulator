@@ -28,14 +28,14 @@ namespace Automatak.Simulator.DNP3.Commons
         public MeasurementCache(DatabaseTemplate template)
         {                        
             var values = new ChangeSet();
-            template.binaries.EachIndex((m, i) => values.Update(new Binary(Flags.RESTART), Convert.ToUInt16(i)));
-            template.doubleBinaries.EachIndex((m, i) => values.Update(new DoubleBitBinary(Flags.RESTART), Convert.ToUInt16(i)));                       
-            template.counters.EachIndex((m, i) => values.Update(new Counter(Flags.RESTART), Convert.ToUInt16(i)));
-            template.frozenCounters.EachIndex((m, i) => values.Update(new FrozenCounter(Flags.RESTART), Convert.ToUInt16(i)));
-            template.analogs.EachIndex((m, i) => values.Update(new Analog(Flags.RESTART), Convert.ToUInt16(i)));
-            template.binaryOutputStatii.EachIndex((m, i) => values.Update(new BinaryOutputStatus(Flags.RESTART), Convert.ToUInt16(i)));
-            template.analogOutputStatii.EachIndex((m, i) => values.Update(new AnalogOutputStatus(Flags.RESTART), Convert.ToUInt16(i)));                            
-            template.timeAndIntervals.EachIndex((m, i) => values.Update(new TimeAndInterval(0, 0, IntervalUnits.Undefined), Convert.ToUInt16(i)));
+            template.binary.EachIndex((m, i) => values.Update(new Binary(new Flags(0x02)), Convert.ToUInt16(i)));
+            template.doubleBinary.EachIndex((m, i) => values.Update(new DoubleBitBinary(new Flags(0x02)), Convert.ToUInt16(i)));                       
+            template.counter.EachIndex((m, i) => values.Update(new Counter(new Flags(0x02)), Convert.ToUInt16(i)));
+            //template.frozenCounter.EachIndex((m, i) => values.Update(new FrozenCounter(new Flags(0x02)), Convert.ToUInt16(i)));
+            template.analog.EachIndex((m, i) => values.Update(new Analog(new Flags(0x02)), Convert.ToUInt16(i)));
+            template.binaryOutputStatus.EachIndex((m, i) => values.Update(new BinaryOutputStatus(new Flags(0x02)), Convert.ToUInt16(i)));
+            template.analogOutputStatus.EachIndex((m, i) => values.Update(new AnalogOutputStatus(new Flags(0x02)), Convert.ToUInt16(i)));                            
+            template.timeAndInterval.EachIndex((m, i) => values.Update(new TimeAndInterval(0, 0, IntervalUnits.Undefined), Convert.ToUInt16(i)));
 
             this.Load(values);
         }
@@ -50,12 +50,12 @@ namespace Automatak.Simulator.DNP3.Commons
 
         }
 
-        void ISOEHandler.Start()
+        void ISOEHandler.BeginFragment(ResponseInfo info)
         {
             Monitor.Enter(mutex);
         }      
         
-        void ISOEHandler.End()
+        void ISOEHandler.EndFragment(ResponseInfo info)
         {
             Monitor.Exit(mutex);          
         }       
@@ -155,96 +155,91 @@ namespace Automatak.Simulator.DNP3.Commons
 
         void IDatabase.Update(Binary update, ushort index, EventMode mode)
         {
-            binaries.Update(update.ToMeasurement(index, TimestampMode.SYNCHRONIZED));            
+            binaries.Update(update.ToMeasurement(index, TimestampQuality.SYNCHRONIZED));            
         }
 
         void IDatabase.Update(DoubleBitBinary update, ushort index, EventMode mode)
         {
-            doubleBinaries.Update(update.ToMeasurement(index, TimestampMode.SYNCHRONIZED));            
+            doubleBinaries.Update(update.ToMeasurement(index, TimestampQuality.SYNCHRONIZED));            
         }
 
         void IDatabase.Update(Analog update, ushort index, EventMode mode)
         {
-            analogs.Update(update.ToMeasurement(index, TimestampMode.SYNCHRONIZED));            
+            analogs.Update(update.ToMeasurement(index, TimestampQuality.SYNCHRONIZED));            
         }
 
         void IDatabase.Update(Counter update, ushort index, EventMode mode)
         {
-            counters.Update(update.ToMeasurement(index, TimestampMode.SYNCHRONIZED));            
-        }
-
-        void IDatabase.Update(FrozenCounter update, ushort index, EventMode mode)
-        {
-            frozenCounters.Update(update.ToMeasurement(index, TimestampMode.SYNCHRONIZED));            
+            counters.Update(update.ToMeasurement(index, TimestampQuality.SYNCHRONIZED));            
         }
 
         void IDatabase.Update(BinaryOutputStatus update, ushort index, EventMode mode)
         {
-            binaryOutputStatii.Update(update.ToMeasurement(index, TimestampMode.SYNCHRONIZED));            
+            binaryOutputStatii.Update(update.ToMeasurement(index, TimestampQuality.SYNCHRONIZED));            
         }
 
         void IDatabase.Update(AnalogOutputStatus update, ushort index, EventMode mode)
         {
-            analogOutputStatii.Update(update.ToMeasurement(index, TimestampMode.SYNCHRONIZED));            
+            analogOutputStatii.Update(update.ToMeasurement(index, TimestampQuality.SYNCHRONIZED));            
         }
 
         void IDatabase.Update(TimeAndInterval update, ushort index)
         {
-            timeAndIntervals.Update(update.ToMeasurement(index, TimestampMode.SYNCHRONIZED));            
+            timeAndIntervals.Update(update.ToMeasurement(index, TimestampQuality.SYNCHRONIZED));            
         }
 
 
         void ISOEHandler.Process(HeaderInfo info, IEnumerable<IndexedValue<Binary>> values)
         {
-            var converted = values.Select(m => m.Value.ToMeasurement(m.Index, info.tsmode));
+            var converted = values.Select(m => m.Value.ToMeasurement(m.Index, info.tsquality));
             binaries.Update(converted);
         }
 
         void ISOEHandler.Process(HeaderInfo info, IEnumerable<IndexedValue<DoubleBitBinary>> values)
         {
-            var converted = values.Select(m => m.Value.ToMeasurement(m.Index, info.tsmode));
+            var converted = values.Select(m => m.Value.ToMeasurement(m.Index, info.tsquality));
             doubleBinaries.Update(converted);
         }
 
         void ISOEHandler.Process(HeaderInfo info, IEnumerable<IndexedValue<Analog>> values)
         {
-            var converted = values.Select(m => m.Value.ToMeasurement(m.Index, info.tsmode));
+            var converted = values.Select(m => m.Value.ToMeasurement(m.Index, info.tsquality));
             analogs.Update(converted);
         }
 
         void ISOEHandler.Process(HeaderInfo info, IEnumerable<IndexedValue<Counter>> values)
         {
-            var converted = values.Select(m => m.Value.ToMeasurement(m.Index, info.tsmode));
+            var converted = values.Select(m => m.Value.ToMeasurement(m.Index, info.tsquality));
             counters.Update(converted);
         }
 
         void ISOEHandler.Process(HeaderInfo info, IEnumerable<IndexedValue<FrozenCounter>> values)
         {
-            var converted = values.Select(m => m.Value.ToMeasurement(m.Index, info.tsmode));
+            var converted = values.Select(m => m.Value.ToMeasurement(m.Index, info.tsquality));
             frozenCounters.Update(converted);
         }
 
         void ISOEHandler.Process(HeaderInfo info, IEnumerable<IndexedValue<BinaryOutputStatus>> values)
         {
-            var converted = values.Select(m => m.Value.ToMeasurement(m.Index, info.tsmode));
+            var converted = values.Select(m => m.Value.ToMeasurement(m.Index, info.tsquality));
             binaryOutputStatii.Update(converted);
         }
 
         void ISOEHandler.Process(HeaderInfo info, IEnumerable<IndexedValue<AnalogOutputStatus>> values)
         {
-            var converted = values.Select(m => m.Value.ToMeasurement(m.Index, info.tsmode));
+            var converted = values.Select(m => m.Value.ToMeasurement(m.Index, info.tsquality));
             analogOutputStatii.Update(converted);
         }
 
         void ISOEHandler.Process(HeaderInfo info, IEnumerable<IndexedValue<OctetString>> values)
         {
-            var converted = values.Select(m => m.Value.ToMeasurement(m.Index, info.tsmode));
+            var converted = values.Select(m => m.Value.ToMeasurement(m.Index, info.tsquality));
             octetStrings.Update(converted);
         }
 
         void ISOEHandler.Process(HeaderInfo info, IEnumerable<IndexedValue<TimeAndInterval>> values)
         {
-            var converted = values.Select(m => m.Value.ToMeasurement(m.Index, info.tsmode));
+            var converted = values.Select(m => m.Value.ToMeasurement(m.Index, info.tsquality));
             octetStrings.Update(converted);
         }
 
@@ -261,6 +256,14 @@ namespace Automatak.Simulator.DNP3.Commons
         void ISOEHandler.Process(HeaderInfo info, IEnumerable<IndexedValue<SecurityStat>> values)
         {
             // TODO
+        }
+
+        void IDatabase.FreezeCounter(ushort index, bool clear, EventMode mode = EventMode.Detect)
+        {
+        }
+
+        void IDatabase.Update(OctetString update, ushort index, EventMode mode = EventMode.Detect)
+        {
         }
     }
 }
