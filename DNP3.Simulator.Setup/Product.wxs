@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="DNP3 Simulator" Language="1033" Version="1.0.0.0" Manufacturer="Andrew Jank" UpgradeCode="396d434b-b0c9-4ee4-b9e5-2595c9307f26">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+
+		<Feature Id="ProductFeature" Title="DNP3.Similator.Setup" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="DNP3 Simulator" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="C.DefaultOutstationPlugin" Guid="*">
+        <File Id="Fi.DefaultOutstationPlugin" Source="$(var.Simulator _simulator\Simulator_.TargetDir)DefaultOutstationPlugin.dll" DiskId="1" KeyPath="yes"/>
+      </Component>
+      <Component Id="C.DNP3CLRAdapter" Guid="*">
+        <File Id="Fi.DNP3CLRAdapter" Source="$(var.Simulator _simulator\Simulator_.TargetDir)DNP3CLRAdapter.dll" DiskId="1" KeyPath="yes"/>
+      </Component>
+      <Component Id="C.DNP3CLRInterface" Guid="*">
+        <File Id="Fi.DNP3CLRInterface" Source="$(var.Simulator _simulator\Simulator_.TargetDir)DNP3CLRInterface.dll" DiskId="1" KeyPath="yes"/>
+      </Component>
+      <Component Id="C.DNP3Commons" Guid="*">
+        <File Id="Fi.DNP3Commons" Source="$(var.Simulator _simulator\Simulator_.TargetDir)DNP3Commons.dll" DiskId="1" KeyPath="yes"/>
+      </Component>
+      <Component Id="C.DNP3PluginAPI" Guid="*">
+        <File Id="Fi.DNP3PluginAPI" Source="$(var.Simulator _simulator\Simulator_.TargetDir)DNP3PluginAPI.dll" DiskId="1" KeyPath="yes"/>
+      </Component>
+      <Component Id="C.RelayOutstationPlugin" Guid="*">
+        <File Id="Fi.RelayOutstationPlugin" Source="$(var.Simulator _simulator\Simulator_.TargetDir)RelayOutstationPlugin.dll" DiskId="1" KeyPath="yes"/>
+      </Component>
+      <Component Id="C.SimulatorAPI" Guid="*">
+        <File Id="Fi.SimulatorAPI" Source="$(var.Simulator _simulator\Simulator_.TargetDir)SimulatorAPI.dll" DiskId="1" KeyPath="yes"/>
+      </Component>
+      <Component Id="C.SimulatorApplication" Guid="*">
+        <File Id="Fi.SimulatorApplication" Source="$(var.Simulator _simulator\Simulator_.TargetPath)" DiskId="1" KeyPath="yes"/>
+      </Component>
+      <Component Id="C.SimulatorApplicationConfig" Guid="*">
+        <File Id="Fi.SimulatorApplicationConfig" Source="$(var.Simulator _simulator\Simulator_.TargetDir)SimulatorApplication.exe.config" DiskId="1" KeyPath="yes"/>
+      </Component>
+      <Component Id="C.SimulatorCommons" Guid="*">
+        <File Id="Fi.SimulatorCommons" Source="$(var.Simulator _simulator\Simulator_.TargetDir)SimulatorCommons.dll" DiskId="1" KeyPath="yes"/>
+      </Component>
+      <Component Id="C.SimulatorDNP3" Guid="*">
+        <File Id="Fi.SimulatorDNP3" Source="$(var.Simulator _simulator\Simulator_.TargetDir)SimulatorDNP3.dll" DiskId="1" KeyPath="yes"/>
+      </Component>
+      <Component Id="C.SimulatorUI" Guid="*">
+        <File Id="Fi.SimulatorUI" Source="$(var.Simulator _simulator\Simulator_.TargetDir)SimulatorUI.dll" DiskId="1" KeyPath="yes"/>
+      </Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>
