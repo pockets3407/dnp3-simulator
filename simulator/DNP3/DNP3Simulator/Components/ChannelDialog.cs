@@ -107,12 +107,12 @@ namespace Automatak.Simulator.DNP3.Components
             {
                 var config = this.serverTLSOptionsControl.Configuration;
                 return (IDNP3Manager manager) =>
-                    manager.AddTLSServer(this.textBoxID.Text, flags, ServerAcceptMode.CloseNew, new IPEndpoint(textBoxHost.Text, Decimal.ToUInt16(numericUpDownPort.Value)), config, ChannelListener.Print());
+                    manager.AddTLSServer(this.textBoxID.Text, flags, ServerAcceptMode.CloseNew, new IPEndpoint(textBoxServerHost.Text, Decimal.ToUInt16(numericUpDownServerPort.Value)), config, ChannelListener.Print());
             }
             else
             {
                 return (IDNP3Manager manager) =>
-                    manager.AddTCPServer(this.textBoxID.Text, flags, ServerAcceptMode.CloseNew, new IPEndpoint(textBoxHost.Text, Decimal.ToUInt16(numericUpDownPort.Value)), ChannelListener.Print());
+                    manager.AddTCPServer(this.textBoxID.Text, flags, ServerAcceptMode.CloseNew, new IPEndpoint(textBoxServerHost.Text, Decimal.ToUInt16(numericUpDownServerPort.Value)), ChannelListener.Print());
             }
         } 
 
