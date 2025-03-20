@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="DNP3 Simulator" Language="1033" Version="1.0.0.0" Manufacturer="Andrew Jank" UpgradeCode="396d434b-b0c9-4ee4-b9e5-2595c9307f26">
+	<Product Id="*" Name="DNP3 Simulator" Language="1033" Version="1.0.1.0" Manufacturer="Andrew Jank" UpgradeCode="396d434b-b0c9-4ee4-b9e5-2595c9307f26">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -56,6 +56,12 @@
       </Component>
       <Component Id="C.SimulatorUI" Guid="*">
         <File Id="Fi.SimulatorUI" Source="$(var.Simulator _simulator\Simulator_.TargetDir)SimulatorUI.dll" DiskId="1" KeyPath="yes"/>
+      </Component>
+      <Component Id="C.LibCrypto" Guid="*">
+        <File Id="Fi.LibCrypto" Source="libcrypto-1_1.dll" DiskId="1" KeyPath="yes"/>
+      </Component>
+      <Component Id="C.LibSSl" Guid="*">
+        <File Id="Fi.LibSSl" Source="libssl-1_1.dll" DiskId="1" KeyPath="yes"/>
       </Component>
 		</ComponentGroup>
 	</Fragment>
